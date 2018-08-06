@@ -47,13 +47,13 @@ Close your wallet and open the Vulcano Appdata folder. Its location depends on y
 In your appdata folder, open masternode.conf with a text editor and add a new line in this format to the bottom of the file:
 
 ```bash
-masternodename ipaddress:52543 genkey collateralTxID outputID
+masternodename ipaddress:62543 genkey collateralTxID outputID
 ```
 
 An example would be
 
 ```
-mn1 127.0.0.2:52543 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0
+mn1 127.0.0.2:62543 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0
 ```
 
 _masternodename_ is a name you choose, _ipaddress_ is the public IP of your VPS, masternodeprivatekey is the output from `masternode genkey`, and _collateralTxID_ & _outputID_ come from `masternode outputs`. Please note that _masternodename_ must not contain any spaces, and should not contain any special characters.
