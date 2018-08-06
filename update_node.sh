@@ -5,9 +5,9 @@ apt-get -qq update
 apt -qqy install curl
 clear
 
-TARBALLURL="https://github.com/`curl -Ls https://github.com/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "/" -f 2-7`"
-TARBALLNAME=`curl -Ls https://github.com/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "/" -f 7`
-VULCVERSION=`curl -Ls https://github.com/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "-" -f 2`
+TARBALLURL=`curl -LS https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "/" -f 2-7`
+TARBALLNAME=`curl -LS https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "/" -f 7`
+VULCVERSION=`curl -LS https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "-" -f 2`
 
 clear
 echo "This script will update your masternode to version $VULCVERSION"
