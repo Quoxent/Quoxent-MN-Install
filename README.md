@@ -16,7 +16,7 @@ The VPS you plan to install your masternode on needs to have at least 1GB of RAM
 
   - Once all addresses are created send 50000 Vulcano each to them. Ensure that you send exactly 50000 Vulcano and do it in a single transaction. You can double check where the coins are coming from by checking it via coin control usually, that's not an issue.
 
-As soon as all 5k transactions are done, we will wait for 15 confirmations. You can check this in your wallet or use the explorer. It should take around 30 minutes if all transaction have 15 confirmations
+As soon as all 50k transactions are done, we will wait for 15 confirmations. You can check this in your wallet or use the explorer. It should take around 30 minutes if all transaction have 15 confirmations
 
 ## Installation & Setting up your Server
 
