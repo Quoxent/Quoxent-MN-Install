@@ -279,17 +279,17 @@ cp ./vulcano-$VULCVERSION/vulcano-cli /usr/local/bin
 cp ./vulcano-$VULCVERSION/vulcano-tx /usr/local/bin
 rm -rf vulcano-$VULCVERSION
 
-# Create .vulcano directory
-mkdir $USERHOME/.vulcano
+# Create .vulcanocore directory
+mkdir $USERHOME/.vulcanocore
 
 # Install bootstrap file
 if [[ ("$BOOTSTRAP" == "y" || "$BOOTSTRAP" == "Y" || "$BOOTSTRAP" == "") ]]; then
   echo "Installing bootstrap file..."
-  wget $BOOTSTRAPURL && xz -cd $BOOTSTRAPARCHIVE > $USERHOME/.vulcano/bootstrap.dat && rm $BOOTSTRAPARCHIVE
+  wget $BOOTSTRAPURL && xz -cd $BOOTSTRAPARCHIVE > $USERHOME/.vulcanocore/bootstrap.dat && rm $BOOTSTRAPARCHIVE
 fi
 
 # Create vulcano.conf
-touch $USERHOME/.vulcano/vulcano.conf
+touch $USERHOME/.vulcanocore/vulcano.conf
 
 # Set TORHOSTNAME if it exists.
 if [[ -f /var/lib/tor/hidden_service/hostname ]]; then
@@ -299,7 +299,7 @@ fi
 # We need a different conf for TOR support
 if [[ ("$TOR" == "y" || "$TOR" == "Y") ]]; then
 
-cat > $USERHOME/.vulcano/vulcano.conf << EOL
+cat > $USERHOME/.vulcanocore/vulcano.conf << EOL
 rpcuser=${RPCUSER}
 rpcpassword=${RPCPASSWORD}
 rpcallowip=127.0.0.1
@@ -319,7 +319,7 @@ EOL
 
 else
 
-cat > $USERHOME/.vulcano/vulcano.conf << EOL
+cat > $USERHOME/.vulcanocore/vulcano.conf << EOL
 ${INSTALLERUSED}
 rpcuser=${RPCUSER}
 rpcpassword=${RPCPASSWORD}
@@ -336,8 +336,8 @@ masternodeprivkey=${KEY}
 masternode=1
 EOL
 fi
-chmod 0600 $USERHOME/.vulcano/vulcano.conf
-chown -R $USER:$USER $USERHOME/.vulcano
+chmod 0600 $USERHOME/.vulcanocore/vulcano.conf
+chown -R $USER:$USER $USERHOME/.vulcanocore
 
 sleep 1
 
@@ -349,8 +349,8 @@ After=network.target
 Type=forking
 User=${USER}
 WorkingDirectory=${USERHOME}
-ExecStart=/usr/local/bin/vulcanod -conf=${USERHOME}/.vulcano/vulcano.conf -datadir=${USERHOME}/.vulcano
-ExecStop=/usr/local/bin/vulcano-cli -conf=${USERHOME}/.vulcano/vulcano.conf -datadir=${USERHOME}/.vulcano stop
+ExecStart=/usr/local/bin/vulcanod -conf=${USERHOME}/.vulcanocore/vulcano.conf -datadir=${USERHOME}/.vulcanocore
+ExecStop=/usr/local/bin/vulcano-cli -conf=${USERHOME}/.vulcanocore/vulcano.conf -datadir=${USERHOME}/.vulcanocore stop
 Restart=on-failure
 RestartSec=1m
 StartLimitIntervalSec=5m
