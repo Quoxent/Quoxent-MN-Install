@@ -5,9 +5,9 @@ apt-get -qq update
 apt -qqy install curl
 clear
 
-TARBALLURL=`curl -LS https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "/" -f 2-7`
-TARBALLNAME=`curl -LS https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "/" -f 7`
-VULCVERSION=`curl -LS https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "-" -f 2`
+TARBALLURL=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4`
+TARBALLNAME=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4 | cut -d '/' -f 9`
+VULCVERSION=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4 | cut -d '/' -f 9 | cut -d '-' -f 2`
 
 clear
 echo "This script will update your masternode to version $VULCVERSION"
@@ -15,8 +15,8 @@ read -p "Press Ctrl-C to abort or any other key to continue. " -n1 -s
 clear
 
 if [ "$(id -u)" != "0" ]; then
-  echo "This script must be run as root."
-  exit 1
+    echo "This script must be run as root."
+    exit 1
 fi
 
 USER=`ps u $(pgrep vulcanod) | grep vulcanod | cut -d " " -f 1`
@@ -24,9 +24,9 @@ USERHOME=`eval echo "~$USER"`
 
 echo "Shutting down masternode..."
 if [ -e /etc/systemd/system/vulcanod.service ]; then
-  systemctl stop vulcanod
+    systemctl stop vulcanod
 else
-  su -c "vulcano-cli stop" $USER
+    su -c "vulcano-cli stop" $USER
 fi
 
 echo "Installing Vulcano $VULCVERSION..."
@@ -47,14 +47,14 @@ if [ -e /usr/bin/vulcano-tx ];then rm -rf /usr/bin/vulcano-tx; fi
 
 # Add Fail2Ban memory hack if needed
 if ! grep -q "ulimit -s 256" /etc/default/fail2ban; then
-  echo "ulimit -s 256" | sudo tee -a /etc/default/fail2ban
-  systemctl restart fail2ban
+    echo "ulimit -s 256" | sudo tee -a /etc/default/fail2ban
+    systemctl restart fail2ban
 fi
 
 echo "Restarting Vulcano daemon..."
 if [ -e /etc/systemd/system/vulcanod.service ]; then
-  systemctl disable vulcanod
-  rm /etc/systemd/system/vulcanod.service
+    systemctl disable vulcanod
+    rm /etc/systemd/system/vulcanod.service
 fi
 
 cat > /etc/systemd/system/vulcanod.service << EOL
@@ -83,13 +83,13 @@ sleep 10
 clear
 
 if ! systemctl status vulcanod | grep -q "active (running)"; then
-  echo "ERROR: Failed to start vulcanod. Please contact support."
-  exit
+    echo "ERROR: Failed to start vulcanod. Please contact support."
+    exit
 fi
 
 echo "Waiting for wallet to load..."
 until su -c "vulcano-cli getinfo 2>/dev/null | grep -q \"version\"" $USER; do
-  sleep 1;
+    sleep 1;
 done
 
 clear
@@ -99,8 +99,8 @@ echo "This can take up to a few hours. Do not close this window."
 echo ""
 
 until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\" : true' > /dev/null" $USER; do
-  echo -ne "Current block: "`su -c "vulcano-cli getinfo" $USER | grep blocks | awk '{print $3}' | cut -d ',' -f 1`'\r'
-  sleep 1
+    echo -ne "Current block: "`su -c "vulcano-cli getinfo" $USER | grep blocks | awk '{print $3}' | cut -d ',' -f 1`'\r'
+    sleep 1
 done
 
 clear
