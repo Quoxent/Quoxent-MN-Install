@@ -99,9 +99,9 @@ clear
 
 # These should automatically find the latest version of Vulcano
 
-TARBALLURL=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "/" -f 2-7`
-TARBALLNAME=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "/" -f 7`
-VULCVERSION=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep href | grep linux64 | cut -d '"' -f 2 | cut -d "-" -f 2`
+TARBALLURL=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4`
+TARBALLNAME=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4 | cut -d '/' -f 9`
+VULCVERSION=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4 | cut -d '/' -f 9 | cut -d '-' -f 2`
 #BOOTSTRAPURL=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep bootstrap.dat.xz | grep browser_download_url | cut -d '"' -f 4`
 #BOOTSTRAPARCHIVE="bootstrap.dat.xz"
 
