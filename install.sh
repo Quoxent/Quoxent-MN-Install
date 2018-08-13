@@ -272,11 +272,12 @@ fi
 
 # Install Vulcano daemon
 wget $TARBALLURL
-tar -xzvf $TARBALLNAME && mv bin vulcano-$VULCVERSION
+tar -xzvf $TARBALLNAME
 rm $TARBALLNAME
-cp ./vulcano-$VULCVERSION/vulcanod /usr/local/bin
-cp ./vulcano-$VULCVERSION/vulcano-cli /usr/local/bin
-cp ./vulcano-$VULCVERSION/vulcano-tx /usr/local/bin
+mv ./vulcanod /usr/local/bin
+mv ./vulcano-cli /usr/local/bin
+mv ./vulcano-tx /usr/local/bin
+rm ./vulcano-qt
 rm -rf vulcano-$VULCVERSION
 
 # Create .vulcanocore directory
