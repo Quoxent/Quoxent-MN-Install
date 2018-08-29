@@ -316,9 +316,17 @@ dnsseed=0
 masternodeprivkey=${KEY}
 masternode=1
 externalip=${TORHOSTNAME}
-addnode=95.216.148.249
-addnode=95.216.148.240
-addnode=138.201.190.47
+addnode=138.201.245.247:62543
+addnode=159.69.80.141:62543
+addnode=159.69.84.71:62543
+addnode=159.69.81.163:62543
+addnode=159.69.83.104:62543
+addnode=95.216.147.117:62543
+addnode=95.216.148.73:62543
+addnode=95.216.147.210:62543
+addnode=159.69.49.144:62543
+addnode=138.201.190.47:62543
+addnode=138.201.175.10:62543
 EOL
 
 else
@@ -338,9 +346,17 @@ bind=${BINDIP}:62543
 masternodeaddr=${EXTERNALIP}
 masternodeprivkey=${KEY}
 masternode=1
-addnode=95.216.148.249
-addnode=95.216.148.240
-addnode=138.201.190.47
+addnode=138.201.245.247:62543
+addnode=159.69.80.141:62543
+addnode=159.69.84.71:62543
+addnode=159.69.81.163:62543
+addnode=159.69.83.104:62543
+addnode=95.216.147.117:62543
+addnode=95.216.148.73:62543
+addnode=95.216.147.210:62543
+addnode=159.69.49.144:62543
+addnode=138.201.190.47:62543
+addnode=138.201.175.10:62543
 EOL
 fi
 chmod 0600 $USERHOME/.vulcanocore/vulcano.conf
