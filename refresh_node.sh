@@ -5,8 +5,8 @@ apt-get -qq update
 apt -qqy install curl
 clear
 
-# BOOTSTRAPURL=`curl -s https://github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep bootstrap.dat.xz | grep browser_download_url | cut -d '"' -f 4`
-# BOOTSTRAPARCHIVE="bootstrap.dat.xz"
+BOOTSTRAPURL=`curl -s https://github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep bootstrap.dat.xz | grep browser_download_url | cut -d '"' -f 4`
+BOOTSTRAPARCHIVE="bootstrap.dat.xz"
 
 clear
 echo "This script will refresh your masternode."
