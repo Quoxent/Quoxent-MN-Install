@@ -102,8 +102,8 @@ clear
 TARBALLURL=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4`
 TARBALLNAME=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4 | cut -d '/' -f 9`
 VULCVERSION=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep browser_download_url | grep linux64 | cut -d '"' -f 4 | cut -d '/' -f 9 | cut -d '-' -f 2`
-#BOOTSTRAPURL=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep bootstrap.dat.xz | grep browser_download_url | cut -d '"' -f 4`
-#BOOTSTRAPARCHIVE="bootstrap.dat.xz"
+BOOTSTRAPURL=`curl -Ls https://api.github.com/repos/VulcanoCrypto/Vulcano/releases/latest | grep bootstrap.dat.xz | grep browser_download_url | cut -d '"' -f 4`
+BOOTSTRAPARCHIVE="bootstrap.dat.xz"
 
 #!/bin/bash
 
