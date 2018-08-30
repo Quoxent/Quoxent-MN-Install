@@ -34,7 +34,7 @@ sleep 5
 rm -rf $USERHOME/.vulcano/blocks
 rm -rf $USERHOME/.vulcano/database
 rm -rf $USERHOME/.vulcano/chainstate
-rm -rf $USERHOME/.vulcano/peers.dat
+#rm -rf $USERHOME/.vulcano/peers.dat
 
 # cp $USERHOME/.vulcano/vulcano.conf $USERHOME/.vulcano/vulcano.conf.backup
 # sed -i '/^addnode/d' $USERHOME/.vulcano/vulcano.conf
