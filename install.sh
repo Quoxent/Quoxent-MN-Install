@@ -3,7 +3,7 @@
 # Make installer interactive and select normal mode by default.
 INTERACTIVE="y"
 ADVANCED="n"
-BOOTSTRAP="n" # Remove this if you want to add bootstrapping to the installer.
+BOOTSTRAP="y"
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]
