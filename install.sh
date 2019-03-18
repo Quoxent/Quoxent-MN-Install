@@ -290,7 +290,7 @@ if [[ ("$BOOTSTRAP" == "y" || "$BOOTSTRAP" == "Y" || "$BOOTSTRAP" == "") ]]; the
 fi
 
 # Install peers.dat - Can be removed after seeder issue is resolved
-wget https://github.com/VulcanoCrypto/Vulcano/releases/download/v2.0.0.0/peers.dat.xz && xz -cd peers.dat.xz > $USERHOME/.vulcanocore/peers.dat && rm peers.dat.xz
+wget https://github.com/VulcanoCrypto/Vulcano/releases/download/v2.1.0.0/peers.dat.xz && xz -cd peers.dat.xz > $USERHOME/.vulcanocore/peers.dat && rm peers.dat.xz
 
 # Create vulcano.conf
 touch $USERHOME/.vulcanocore/vulcano.conf
