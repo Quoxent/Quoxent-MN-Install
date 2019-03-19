@@ -50,7 +50,7 @@ if [ -e /usr/bin/vulcano-cli ];then rm -rf /usr/bin/vulcano-cli; fi
 if [ -e /usr/bin/vulcano-tx ];then rm -rf /usr/bin/vulcano-tx; fi
 
 # Remove addnodes from vulcano.conf
-sed -i '/^addnode/d' "$USERHOME/.vulcano/vulcano.conf"
+sed -i '/^addnode/d' "$USERHOME/.vulcanocore/vulcano.conf"
 
 # Add Fail2Ban memory hack if needed
 if ! grep -q "ulimit -s 256" /etc/default/fail2ban; then
@@ -72,8 +72,8 @@ After=network-online.target
 Type=forking
 User=${USER}
 WorkingDirectory=${USERHOME}
-ExecStart=/usr/local/bin/vulcanod -conf=${USERHOME}/.vulcano/vulcano.conf -datadir=${USERHOME}/.vulcano
-ExecStop=/usr/local/bin/vulcano-cli -conf=${USERHOME}/.vulcano/vulcano.conf -datadir=${USERHOME}/.vulcano stop
+ExecStart=/usr/local/bin/vulcanod -conf=${USERHOME}/.vulcanocore/vulcano.conf -datadir=${USERHOME}/.vulcanocore
+ExecStop=/usr/local/bin/vulcano-cli -conf=${USERHOME}/.vulcanocore/vulcano.conf -datadir=${USERHOME}/.vulcanocore stop
 Restart=on-failure
 RestartSec=1m
 StartLimitIntervalSec=5m
