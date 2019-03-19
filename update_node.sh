@@ -141,7 +141,7 @@ echo "Your masternode is syncing. Please wait for this process to finish."
 echo "This can take up to a few hours. Do not close this window."
 echo ""
 
-until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced" : true' > /dev/null" "$USER"; do 
+until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\" : true' > /dev/null" "$USER"; do 
   echo -ne "Current block: $(su -c "vulcano-cli getblockcount" "$USER")\\r"
   sleep 1
 done
