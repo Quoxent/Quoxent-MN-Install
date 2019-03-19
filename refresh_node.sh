@@ -31,16 +31,16 @@ echo "Refreshing node, please wait."
 
 sleep 5
 
-rm -rf "$USERHOME/.vulcano/blocks"
-rm -rf "$USERHOME/.vulcano/database"
-rm -rf "$USERHOME/.vulcano/chainstate"
-rm -rf "$USERHOME/.vulcano/peers.dat"
+rm -rf "$USERHOME/.vulcanocore/blocks"
+rm -rf "$USERHOME/.vulcanocore/database"
+rm -rf "$USERHOME/.vulcanocore/chainstate"
+rm -rf "$USERHOME/.vulcanocore/peers.dat"
 
-cp "$USERHOME/.vulcano/vulcano.conf" "$USERHOME/.vulcano/vulcano.conf.backup"
-sed -i '/^addnode/d' "$USERHOME/.vulcano/vulcano.conf"
+cp "$USERHOME/.vulcanocore/vulcano.conf" "$USERHOME/.vulcanocore/vulcano.conf.backup"
+sed -i '/^addnode/d' "$USERHOME/.vulcanocore/vulcano.conf"
 
 echo "Installing bootstrap file..."
-wget "$BOOTSTRAPURL" && xz -cd $BOOTSTRAPARCHIVE > "$USERHOME/.vulcano/bootstrap.dat" && rm $BOOTSTRAPARCHIVE
+wget "$BOOTSTRAPURL" && xz -cd $BOOTSTRAPARCHIVE > "$USERHOME/.vulcanocore/bootstrap.dat" && rm $BOOTSTRAPARCHIVE
 
 if [ -e /etc/systemd/system/vulcanod.service ]; then
   sudo systemctl start vulcanod
