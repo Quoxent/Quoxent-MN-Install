@@ -43,7 +43,7 @@ echo "Installing bootstrap file..."
 wget "$BOOTSTRAPURL" && xz -cd $BOOTSTRAPARCHIVE > "$USERHOME/.vulcanocore/bootstrap.dat" && rm $BOOTSTRAPARCHIVE
 
 # Install peers.dat - Can be removed after seeder issue is resolved
-wget https://github.com/VulcanoCrypto/Vulcano/releases/download/v2.1.0.0/peers.dat.xz && xz -cd peers.dat.xz > $USERHOME/.vulcanocore/peers.dat && rm peers.dat.xz
+wget https://github.com/VulcanoCrypto/Vulcano/releases/download/2.1.0.0/peers.dat.xz && xz -cd peers.dat.xz > $USERHOME/.vulcanocore/peers.dat && rm peers.dat.xz
 
 if [ -e /etc/systemd/system/vulcanod.service ]; then
   sudo systemctl start vulcanod
