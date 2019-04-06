@@ -566,7 +566,7 @@ fi
 echo ""
 
 until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\": true' > /dev/null" "$USER"; do 
-  echo -ne "
+  echo "
               c\ /\7J
         ___    /  /
         \  \  /  /
@@ -584,8 +584,7 @@ until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\
 
   Support the community! Tell your friends about VULC!
     Seriously, take a photo of this and tweet it!
-                   www.vulcano.io
-"
+                   www.vulcano.io"
   sleep 1
 done
 
