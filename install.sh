@@ -567,7 +567,26 @@ fi
 echo ""
 
 until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\": true' > /dev/null" "$USER"; do 
-  echo -ne "Current block: $(su -c "vulcano-cli getblockcount" "$USER")\\r"
+  echo -ne "
+              c\ /\7J
+        ___    /  /
+        \  \  /  /
+         \  \/  /
+          \    /         _  _        _
+           \  / | | |   |  |_| |\ | | |
+            \/  |_| |__ |_ | | | \| |_|
+               MASTERNODE SYNCING!
+
+        Current block: $(su -c "vulcano-cli getblockcount" "$USER")\\r
+
+       You can actually close this window now!
+     In a couple hours, go to your VULCANO wallet,
+    select this MASTERNODE, and click "Start Alias!
+
+  Support the community! Tell your friends about VULC!
+    Seriously, take a photo of this and tweet it!
+                   www.vulcano.io
+"
   sleep 1
 done
 
