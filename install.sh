@@ -172,17 +172,18 @@ clear
 if [[ $INTERACTIVE = "y" ]]; then
 echo "
 
-            c\ /\7J
-      ___    /  /
-      \  \  /  /
-       \  \/  /
-        \    /         _  _        _
-         \  / | | |   |  |_| |\ | | |
-          \/  |_| |__ |_ | | | \| |_|
-             MASTERNODE INSTALLER v5
-
+              c\ /\7J
+        ___    /  /
+        \  \  /  /
+         \  \/  /
+          \    /         _  _        _
+           \  / | | |   |  |_| |\ | | |
+            \/  |_| |__ |_ | | | \| |_|
+              MASTERNODE INSTALLER v5
  Support the community! Tell your friends about VULC!
+    Seriously, take a photo of this and tweet it!
                    www.vulcano.io
+              www.vulcano.io
 
 "
 
