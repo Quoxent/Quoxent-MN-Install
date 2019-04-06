@@ -181,7 +181,7 @@ echo "
           \/  |_| |__ |_ | | | \| |_|
              MASTERNODE INSTALLER v5
 
-Support the community! Tell your friends about $VULC!
+Support the community! Tell your friends about VULC!
 
 "
 
