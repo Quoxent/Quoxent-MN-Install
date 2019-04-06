@@ -171,14 +171,14 @@ clear
 
 if [[ $INTERACTIVE = "y" ]]; then
 echo "
-
+\u001b[1m\u001b[31m
             c\ /\7J
       ___    /  /
       \  \  /  /
        \  \/  /
         \    /         _  _        _
          \  / | | |   |  |_| |\ | | |
-          \/  |_| |__ |_ | | | \| |_|
+          \/  |_| |__ |_ | | | \| |_| \u001b[0m
              MASTERNODE INSTALLER v5
 
 Support the community! Tell your friends about VULC!
