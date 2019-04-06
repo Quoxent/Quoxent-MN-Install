@@ -183,8 +183,7 @@ echo "
  Support the community! Tell your friends about VULC!
     Seriously, take a photo of this and tweet it!
                    www.vulcano.io
-              www.vulcano.io
-
+              
 "
 
 sleep 3
