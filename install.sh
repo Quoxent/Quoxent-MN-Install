@@ -553,9 +553,19 @@ done
 
 clear
 
-echo "Your masternode is syncing. Please wait for this process to finish."
+echo "              c\ /\7J"
+echo "        ___    /  /"
+echo "        \  \  /  /"
+echo "         \  \/  /"
+echo "          \    /         _  _        _"
+echo "           \  / | | |   |  |_| |\ | | |"
+echo "            \/  |_| |__ |_ | | | \| |_|"
+echo "               MASTERNODE SYNCING!"
+echo ""
 echo "This can take up to a few hours. Do not close this window."
-echo "While you wait, tell the world you are starting a VULC masternode."
+echo "   Support the community! Tell your friends about VULC!"
+echo "      Seriously, take a photo of this and tweet it!"
+echo "                      www.vulcano.io"
 if [[ ("$TOR" == "y" || "$TOR" == "Y") ]]; then 
   echo "The TOR address of your masternode is: $TORHOSTNAME"
 fi
@@ -567,7 +577,7 @@ fi
 echo ""
 
 until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\": true' > /dev/null" "$USER"; do 
-  echo -ne "Current block: $(su -c "vulcano-cli getblockcount" "$USER")\\r"
+  echo -ne "Blocks of awesome loaded: $(su -c "vulcano-cli getblockcount" "$USER")\\r"
   sleep 1
 done
 
