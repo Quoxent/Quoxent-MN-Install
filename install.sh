@@ -553,8 +553,20 @@ done
 
 clear
 
-echo "Your masternode is syncing. Please wait for this process to finish."
+echo "              c\ /\7J"
+echo "        ___    /  /"
+echo "        \  \  /  /"
+echo "         \  \/  /"
+echo "          \    /         _  _        _"
+echo "           \  / | | |   |  |_| |\ | | |"
+echo "            \/  |_| |__ |_ | | | \| |_|"
+echo "               MASTERNODE SYNCING!"
+echo ""
 echo "This can take up to a few hours. Do not close this window."
+echo "   Support the community! Tell your friends about VULC!"
+echo "      Seriously, take a photo of this and tweet it!"
+echo "                      www.vulcano.io"
+
 if [[ ("$TOR" == "y" || "$TOR" == "Y") ]]; then 
   echo "The TOR address of your masternode is: $TORHOSTNAME"
 fi
@@ -566,25 +578,7 @@ fi
 echo ""
 
 until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\": true' > /dev/null" "$USER"; do 
-  echo "
-              c\ /\7J
-        ___    /  /
-        \  \  /  /
-         \  \/  /
-          \    /         _  _        _
-           \  / | | |   |  |_| |\ | | |
-            \/  |_| |__ |_ | | | \| |_|
-               MASTERNODE SYNCING!
-
-        Current block: $(su -c "vulcano-cli getblockcount" "$USER")\\r
-
-       You can actually close this window now!
-     In a couple hours, go to your VULCANO wallet,
-    select this MASTERNODE, and click "Start Alias!
-
-  Support the community! Tell your friends about VULC!
-    Seriously, take a photo of this and tweet it!
-                   www.vulcano.io"
+  echo -ne "Current block: $(su -c "vulcano-cli getblockcount" "$USER")\\r"
   sleep 1
 done
 
