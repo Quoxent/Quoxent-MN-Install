@@ -181,8 +181,8 @@ echo "
           \/  |_| |__ |_ | | | \| |_|
              MASTERNODE INSTALLER v5
 
-Support the community! Tell your friends about VULC!
-                  www.vulcano.io
+ Support the community! Tell your friends about VULC!
+                   www.vulcano.io
 
 "
 
