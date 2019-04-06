@@ -552,20 +552,10 @@ until su -c "vulcano-cli getinfo 2>/dev/null | grep -q \"version\"" $USER; do
 done
 
 clear
-echo "
-              c\ /\7J
-        ___    /  /
-        \  \  /  /
-         \  \/  /
-          \    /         _  _        _
-           \  / | | |   |  |_| |\ | | |
-            \/  |_| |__ |_ | | | \| |_|
-               MASTERNODE SYNCING!
 
-This can take up to a few hours. Do not close this window.
-   Support the community! Tell your friends about VULC!
-      Seriously, take a photo of this and tweet it!
-                      www.vulcano.io"
+echo "Your masternode is syncing. Please wait for this process to finish."
+echo "This can take up to a few hours. Do not close this window."
+echo "While you wait, tell the world you are starting a VULC masternode."
 if [[ ("$TOR" == "y" || "$TOR" == "Y") ]]; then 
   echo "The TOR address of your masternode is: $TORHOSTNAME"
 fi
