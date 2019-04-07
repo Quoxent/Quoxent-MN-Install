@@ -554,14 +554,14 @@ done
 clear
 
 echo ""
-echo "               c\ /\7J"
-echo "         ___    /  /"
-echo "         \  \  /  /"
-echo "          \  \/  /"
-echo "           \    /         _  _        _"
-echo "            \  / | | |   |  |_| |\ | | |"
-echo "             \/  |_| |__ |_ | | | \| |_|"
-echo "                MASTERNODE SYNCING!"
+echo "                c\ /\7J"
+echo "          ___    /  /"
+echo "          \  \  /  /"
+echo "           \  \/  /"
+echo "            \    /         _  _        _"
+echo "             \  / | | |   |  |_| |\ | | |"
+echo "              \/  |_| |__ |_ | | | \| |_|"
+echo "                 MASTERNODE SYNCING!"
 echo ""
 echo " This can take up to a few hours. Do not close this window."
 echo "    Support the community! Tell your friends about VULC!"
@@ -580,7 +580,7 @@ echo ""
 
 until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\": true' > /dev/null" "$USER"; do 
   echo -ne "           Blocks of awesome loaded: $(su -c "vulcano-cli getblockcount" "$USER")\\r"
-  sleep 1
+  sleep 10
 done
 
 clear
