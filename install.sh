@@ -586,20 +586,22 @@ clear
 
 cat << EOL
 
-                c\ /\7J
-          ___    /  /
-          \  \  /  /
-           \  \/  /
-            \    /         _  _        _
-             \  / | | |   |  |_| |\ | | |
-              \/  |_| |__ |_ | | | \| |_|
-               MASTERNODE READY TO START!
+                  c\ /\7J
+            ___    /  /
+            \  \  /  /
+             \  \/  /
+              \    /         _  _        _
+               \  / | | |   |  |_| |\ | | |
+                \/  |_| |__ |_ | | | \| |_|
+                 MASTERNODE READY TO START!
 
 
-Now, you need to start your masternode! If you haven't already, please add this
-node to your masternode.conf file. Once you have added the node, restart and 
-unlock your desktop wallet! Then, go to the Masternodes tab, select your new node and 
-click "Start Alias." Ready, on your marks, go!
+  Now, you need to start your masternode! If you haven't already, 
+  please add this node to your masternode.conf file. Once you have 
+  added the node, restart and unlock your desktop wallet! Then, go 
+  to the Masternodes tab, select your new node and click "Start Alias."
+
+                   Ready, on your marks, go!
 
 EOL
 
@@ -617,7 +619,7 @@ clear
 su -c "/usr/local/bin/vulcano-cli masternode status" $USER
 sleep 5
 
-echo "" && echo "You did it! Yaaaay! Masternode setup completed! Now, go tell your friends how easy it was!" 
+echo "" && echo "  You did it! Yaaaay! Masternode setup completed! Now, go tell your friends how easy it was!" 
 if [[ ("$TOR" == "y" || "$TOR" == "Y") ]]; then 
   echo "The TOR address of your masternode is: $TORHOSTNAME"
 fi
