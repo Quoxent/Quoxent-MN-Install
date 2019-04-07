@@ -578,8 +578,8 @@ fi
 
 echo ""
 
-until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\": true' > /dev/null" "$USER"; do 
-  echo -ne "           Blocks of awesome loaded: $(su -c "vulcano-cli getblockcount" "$USER")\\r"
+until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\" : true' > /dev/null" $USER; do
+  echo -ne "           Blocks of awesome loaded: "`su -c "vulcano-cli getinfo" $USER | grep blocks | awk '{print $3}' | cut -d ',' -f 1`'\r'
 done
 
 clear
