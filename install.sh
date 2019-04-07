@@ -171,19 +171,18 @@ clear
 
 if [[ $INTERACTIVE = "y" ]]; then
 echo "
-    ___T_
-   | o o |
-   |__-__|
-   /| []|\\\\
- ()/|___|\\()
-    |_|_|
-    /_|_\\  ------- MASTERNODE INSTALLER v4 -------+
- |                                                  |
- |   Welcome to the Vulcano Masternode Installer!   |::
- |                                                  |::
- +------------------------------------------------+::
-   ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+              c\ /\7J
+        ___    /  /
+        \  \  /  /
+         \  \/  /
+          \    /         _  _        _
+           \  / | | |   |  |_| |\ | | |
+            \/  |_| |__ |_ | | | \| |_|
+              MASTERNODE INSTALLER v5
+ Support the community! Tell your friends about VULC!
+                   www.vulcano.io
+              
 "
 
 sleep 3
@@ -554,8 +553,21 @@ done
 
 clear
 
-echo "Your masternode is syncing. Please wait for this process to finish."
-echo "This can take up to a few hours. Do not close this window."
+echo ""
+echo "                c\ /\7J"
+echo "          ___    /  /"
+echo "          \  \  /  /"
+echo "           \  \/  /"
+echo "            \    /         _  _        _"
+echo "             \  / | | |   |  |_| |\ | | |"
+echo "              \/  |_| |__ |_ | | | \| |_|"
+echo "                 MASTERNODE SYNCING!"
+echo ""
+echo " This can take up to a few hours. Do not close this window."
+echo "    Support the community! Tell your friends about VULC!"
+echo "       Seriously, take a photo of this and tweet it!"
+echo "                       www.vulcano.io"
+echo ""
 if [[ ("$TOR" == "y" || "$TOR" == "Y") ]]; then 
   echo "The TOR address of your masternode is: $TORHOSTNAME"
 fi
@@ -566,24 +578,36 @@ fi
 
 echo ""
 
-until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\": true' > /dev/null" "$USER"; do 
-  echo -ne "Current block: $(su -c "vulcano-cli getblockcount" "$USER")\\r"
-  sleep 1
+until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\" : true' > /dev/null" $USER; do
+  echo -ne "                Blocks of awesome loaded: "`su -c "vulcano-cli getinfo" $USER | grep blocks | awk '{print $3}' | cut -d ',' -f 1`'\r'
 done
 
 clear
 
 cat << EOL
 
-Now, you need to start your masternode. If you haven't already, please add this
-node to your masternode.conf now, restart and unlock your desktop wallet, go to
-the Masternodes tab, select your new node and click "Start Alias."
+                  c\ /\7J
+            ___    /  /
+            \  \  /  /
+             \  \/  /
+              \    /         _  _        _
+               \  / | | |   |  |_| |\ | | |
+                \/  |_| |__ |_ | | | \| |_|
+                 MASTERNODE READY TO START!
+
+
+  Now, you need to start your masternode! If you haven't already, 
+  please add this node to your masternode.conf file. Once you have 
+  added the node, restart and unlock your desktop wallet! Then, go 
+  to the Masternodes tab, select your new node and click "Start Alias."
+
+                   Ready, on your marks, go!
 
 EOL
 
 
 if [[ $INTERACTIVE = "y" ]]; then
-  read -rp "Press Enter to continue after you've done that. " -n1 -s
+  read -rp "Press Enter to continue after you've started the node in your wallet. " -n1 -s
 fi
 
 clear
@@ -595,7 +619,7 @@ clear
 su -c "/usr/local/bin/vulcano-cli masternode status" $USER
 sleep 5
 
-echo "" && echo "Masternode setup completed." 
+echo "" && echo "  You did it! Yaaaay! Masternode setup completed! Now, go tell your friends how easy it was!" 
 if [[ ("$TOR" == "y" || "$TOR" == "Y") ]]; then 
   echo "The TOR address of your masternode is: $TORHOSTNAME"
 fi
