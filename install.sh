@@ -580,7 +580,6 @@ echo ""
 
 until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\": true' > /dev/null" "$USER"; do 
   echo -ne "           Blocks of awesome loaded: $(su -c "vulcano-cli getblockcount" "$USER")\\r"
-  sleep 10
 done
 
 clear
