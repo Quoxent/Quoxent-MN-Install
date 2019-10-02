@@ -63,7 +63,7 @@ Restart and unlock your wallet.
 SSH (Putty on Windows, Terminal.app on macOS) to your VPS, login as root (**Please note:** It's normal that you don't see your password after typing or pasting it) and run the following command:
 
 ```bash
-bash <( curl https://raw.githubusercontent.com/VulcanoCrypto/Vulcano-MN-Install/master/install.sh )
+bash <( curl https://raw.githubusercontent.com/quoxent/Vulcano-MN-Install/master/install.sh )
 ```
 
 If you get the error "bash: curl: command not found", run this first: `apt-get -y install curl`
@@ -91,7 +91,7 @@ If your masternode is stuck on a block or behaving badly, you can refresh it.
 Please note that this script must be run as root.
 
 ```
-bash <( curl https://raw.githubusercontent.com/VulcanoCrypto/Vulcano-MN-Install/master/refresh_node.sh )
+bash <( curl https://raw.githubusercontent.com/quoxent/Vulcano-MN-Install/master/refresh_node.sh )
 ```
 
 No other attention is required.
@@ -102,7 +102,7 @@ To update your node please run this command and follow the instructions.
 Please note that this script must be run as root.
 
 ```
-bash <( curl https://raw.githubusercontent.com/VulcanoCrypto/Vulcano-MN-Install/master/update_node.sh )
+bash <( curl https://raw.githubusercontent.com/quoxent/Vulcano-MN-Install/master/update_node.sh )
 ```
 
 ## Non-interactive installation
