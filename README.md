@@ -4,9 +4,9 @@ The VPS you plan to install your masternode on needs to have at least 1GB of RAM
 
 ## Funding your Masternode
 
-* First, we will do the initial collateral TX and send exactly 50000 Vulcano to one of our addresses. To keep things sorted in case we setup more masternodes we will label the addresses we use.
+* First, we will do the initial collateral TX and send exactly 50000 Quoxent to one of our addresses. To keep things sorted in case we setup more masternodes we will label the addresses we use.
 
-  - Open your Vulcano wallet and switch to the "Receive" tab.
+  - Open your Quoxent wallet and switch to the "Receive" tab.
 
   - Click into the label field and create a label, I will use MN1
 
@@ -14,7 +14,7 @@ The VPS you plan to install your masternode on needs to have at least 1GB of RAM
 
   - The generated address will now be labelled as MN1 If you want to setup more masternodes just repeat the steps so you end up with several addresses for the total number of nodes you wish to setup. Example: For 10 nodes you will need 10 addresses, label them all.
 
-  - Once all addresses are created send 50000 Vulcano each to them. Ensure that you send exactly 50000 Vulcano and do it in a single transaction. You can double check where the coins are coming from by checking it via coin control usually, that's not an issue.
+  - Once all addresses are created send 50000 Quoxent each to them. Ensure that you send exactly 50000 Quoxent and do it in a single transaction. You can double check where the coins are coming from by checking it via coin control usually, that's not an issue.
 
 As soon as all 50k transactions are done, we will wait for 15 confirmations. You can check this in your wallet or use the explorer. It should take around 30 minutes if all transaction have 15 confirmations
 
@@ -38,11 +38,11 @@ masternode outputs
 
 Copy both the key and output information to a text file.
 
-Close your wallet and open the Vulcano Appdata folder. Its location depends on your OS.
+Close your wallet and open the Quoxent Appdata folder. Its location depends on your OS.
 
-* **Windows:** Press Windows+R and write %appdata% - there, open the folder VulcanoCore.
-* **macOS:** Press Command+Space to open Spotlight, write ~/Library/Application Support/VulcanoCore and press Enter.
-* **Linux:** Open ~/.vulcanocore/
+* **Windows:** Press Windows+R and write %appdata% - there, open the folder QuoxentCore.
+* **macOS:** Press Command+Space to open Spotlight, write ~/Library/Application Support/QuoxentCore and press Enter.
+* **Linux:** Open ~/.quoxentcore/
 
 In your appdata folder, open masternode.conf with a text editor and add a new line in this format to the bottom of the file:
 
@@ -63,7 +63,7 @@ Restart and unlock your wallet.
 SSH (Putty on Windows, Terminal.app on macOS) to your VPS, login as root (**Please note:** It's normal that you don't see your password after typing or pasting it) and run the following command:
 
 ```bash
-bash <( curl https://raw.githubusercontent.com/quoxent/Vulcano-MN-Install/master/install.sh )
+bash <( curl https://raw.githubusercontent.com/quoxent/Quoxent-MN-Install/master/install.sh )
 ```
 
 If you get the error "bash: curl: command not found", run this first: `apt-get -y install curl`
@@ -72,7 +72,7 @@ When the script asks, confirm your VPS IP Address and paste your masternode key 
 
 The installer will then present you with a few options.
 
-**PLEASE NOTE**: Do not choose the advanced installation option unless you have experience with Linux and know what you are doing - if you do and something goes wrong, the Vulcano team CANNOT help you, and you will have to restart the installation.
+**PLEASE NOTE**: Do not choose the advanced installation option unless you have experience with Linux and know what you are doing - if you do and something goes wrong, the Quoxent team CANNOT help you, and you will have to restart the installation.
 
 Follow the instructions on screen.
 
@@ -91,7 +91,7 @@ If your masternode is stuck on a block or behaving badly, you can refresh it.
 Please note that this script must be run as root.
 
 ```
-bash <( curl https://raw.githubusercontent.com/quoxent/Vulcano-MN-Install/master/refresh_node.sh )
+bash <( curl https://raw.githubusercontent.com/quoxent/Quoxent-MN-Install/master/refresh_node.sh )
 ```
 
 No other attention is required.
@@ -102,7 +102,7 @@ To update your node please run this command and follow the instructions.
 Please note that this script must be run as root.
 
 ```
-bash <( curl https://raw.githubusercontent.com/quoxent/Vulcano-MN-Install/master/update_node.sh )
+bash <( curl https://raw.githubusercontent.com/quoxent/Quoxent-MN-Install/master/update_node.sh )
 ```
 
 ## Non-interactive installation
@@ -122,10 +122,10 @@ You can use the installer in a non-interactive mode by using command line argume
     --no-ufw                  : Don't install UFW
     -h --help                 : Display this help text.
     --no-interaction          : Do not wait for wallet activation.
-    --tor                     : Install TOR and configure vulcanod to use it
+    --tor                     : Install TOR and configure quoxentd to use it
 ```
 
-If you want to make the installation process fully non-interactive, you need to provide Vulcano with arguments for the mode to use, the external IP, private key, and wether to use fail2ban, UFW and the bootstrap, and then also add the `--no-interaction` parameter. Please not that this will not tell you to activate your masternode from your wallet after the node has finished syncing, so it will not run until you do.
+If you want to make the installation process fully non-interactive, you need to provide Quoxent with arguments for the mode to use, the external IP, private key, and wether to use fail2ban, UFW and the bootstrap, and then also add the `--no-interaction` parameter. Please not that this will not tell you to activate your masternode from your wallet after the node has finished syncing, so it will not run until you do.
 
 ## Installing a masternode with TOR
 
