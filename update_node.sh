@@ -5,12 +5,12 @@ apt-get -qq update
 apt -qqy install curl jq
 clear
 
-TARBALLURL=$(curl -s https://api.github.com/repos/vulcanocrypto/vulcano/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4)
-TARBALLNAME=$(curl -s https://api.github.com/repos/vulcanocrypto/vulcano/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4 | cut -d "/" -f 9)
-VULCVERSION=$(curl -s https://api.github.com/repos/vulcanocrypto/vulcano/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4 | cut -d "/" -f 8)
+TARBALLURL=$(curl -s https://api.github.com/repos/quoxent/vulcano/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4)
+TARBALLNAME=$(curl -s https://api.github.com/repos/quoxent/vulcano/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4 | cut -d "/" -f 9)
+VULCVERSION=$(curl -s https://api.github.com/repos/quoxent/vulcano/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4 | cut -d "/" -f 8)
 
 LOCALVERSION=$(vulcano-cli --version | cut -d " " -f 6)
-REMOTEVERSION=$(curl -s https://api.github.com/repos/vulcanocrypto/vulcano/releases/latest | jq -r ".tag_name")
+REMOTEVERSION=$(curl -s https://api.github.com/repos/quoxent/vulcano/releases/latest | jq -r ".tag_name")
 
 if [[ "$LOCALVERSION" = "$REMOTEVERSION" ]]; then
   echo "No update necessary."
@@ -97,7 +97,7 @@ fi
 
 echo "Installing vulcano Autoupdater..."
 rm -f /usr/local/bin/vulcanoupdate
-curl -o /usr/local/bin/vulcanoupdate https://raw.githubusercontent.com/vulcanocrypto/vulcano-MN-Install/master/vulcanoupdate
+curl -o /usr/local/bin/vulcanoupdate https://raw.githubusercontent.com/quoxent/vulcano-MN-Install/master/vulcanoupdate
 chmod a+x /usr/local/bin/vulcanoupdate
 
 if [ ! -f /etc/systemd/system/vulcanoupdate.service ]; then
