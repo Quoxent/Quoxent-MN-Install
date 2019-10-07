@@ -115,9 +115,9 @@ clear
 
 # These should automatically find the latest version of Vulcano
 
-TARBALLURL=$(curl -s https://api.github.com/repos/vulcanocrypto/vulcano/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4)
-TARBALLNAME=$(curl -s https://api.github.com/repos/vulcanocrypto/vulcano/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4 | cut -d "/" -f 9)
-BOOTSTRAPURL=$(curl -s https://api.github.com/repos/vulcanocrypto/vulcano/releases/latest | grep bootstrap.dat.xz | grep browser_download_url | cut -d '"' -f 4)
+TARBALLURL=$(curl -s https://api.github.com/repos/quoxent/vulcano/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4)
+TARBALLNAME=$(curl -s https://api.github.com/repos/quoxent/vulcano/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4 | cut -d "/" -f 9)
+BOOTSTRAPURL=$(curl -s https://api.github.com/repos/quoxent/vulcano/releases/latest | grep bootstrap.dat.xz | grep browser_download_url | cut -d '"' -f 4)
 BOOTSTRAPARCHIVE="bootstrap.dat.xz"
 I2PBINURL="https://github.com/kewagi/kovri/releases/download/v0.1.0-alpha/kovri-0.1.0-alpha.tar.gz"
 I2PBINARCHIVE="kovri-0.1.0-alpha.tar.gz"
@@ -404,7 +404,7 @@ if [[ ("$BOOTSTRAP" == "y" || "$BOOTSTRAP" == "Y" || "$BOOTSTRAP" == "") ]]; the
 fi
 
 # Install peers.dat - Can be removed after seeder issue is resolved
-#wget https://github.com/VulcanoCrypto/Vulcano/releases/download/2.1.0.0/peers.dat.xz && xz -cd peers.dat.xz > $USERHOME/.vulcanocore/peers.dat && rm peers.dat.xz
+wget https://github.com/Quoxent/Vulcano/releases/download/2.1.0.0/peers.dat.xz && xz -cd peers.dat.xz > $USERHOME/.vulcanocore/peers.dat && rm peers.dat.xz
 
 # Create vulcano.conf
 touch "$USERHOME/.vulcanocore/vulcano.conf"
@@ -513,7 +513,7 @@ fi
 
 echo "Installing Vulcano Autoupdater..."
 rm -f /usr/local/bin/vulcanoupdate
-curl -o /usr/local/bin/vulcanoupdate https://raw.githubusercontent.com/vulcanocrypto/Vulcano-MN-Install/master/vulcanoupdate
+curl -o /usr/local/bin/vulcanoupdate https://raw.githubusercontent.com/quoxent/Quoxent-MN-Install/master/vulcanoupdate
 chmod a+x /usr/local/bin/vulcanoupdate
 
 if [ ! -f /etc/systemd/system/vulcanoupdate.service ]; then
