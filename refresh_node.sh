@@ -5,7 +5,7 @@ apt-get -qq update
 apt -qqy install curl jq
 clear
 
-BOOTSTRAPURL=$(curl -s https://api.github.com/repos/vulcanocrypto/vulcano/releases/latest | grep bootstrap.dat.xz | grep browser_download_url | cut -d '"' -f 4)
+BOOTSTRAPURL=$(curl -s https://api.github.com/repos/quoxent/vulcano/releases/latest | grep bootstrap.dat.xz | grep browser_download_url | cut -d '"' -f 4)
 BOOTSTRAPARCHIVE="bootstrap.dat.xz"
 
 clear
@@ -43,7 +43,7 @@ echo "Installing bootstrap file..."
 wget "$BOOTSTRAPURL" && xz -cd $BOOTSTRAPARCHIVE > "$USERHOME/.vulcanocore/bootstrap.dat" && rm $BOOTSTRAPARCHIVE
 
 # Install peers.dat - Can be removed after seeder issue is resolved
-wget https://github.com/VulcanoCrypto/Vulcano/releases/download/2.1.0.0/peers.dat.xz && xz -cd peers.dat.xz > $USERHOME/.vulcanocore/peers.dat && rm peers.dat.xz
+wget https://github.com/quoxent/Vulcano/releases/download/2.1.0.0/peers.dat.xz && xz -cd peers.dat.xz > $USERHOME/.vulcanocore/peers.dat && rm peers.dat.xz
 
 if [ -e /etc/systemd/system/vulcanod.service ]; then
   sudo systemctl start vulcanod
