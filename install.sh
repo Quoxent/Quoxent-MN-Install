@@ -512,12 +512,12 @@ if ! systemctl status vulcanod | grep -q "active (running)"; then
 fi
 
 echo "Installing Vulcano Autoupdater..."
-rm -f /usr/local/bin/vulcanoupdate
-curl -o /usr/local/bin/vulcanoupdate https://raw.githubusercontent.com/quoxent/Quoxent-MN-Install/master/vulcanoupdate
-chmod a+x /usr/local/bin/vulcanoupdate
+rm -f /usr/local/bin/quoxentupdate
+curl -o /usr/local/bin/quoxentupdate https://raw.githubusercontent.com/quoxent/Quoxent-MN-Install/master/quoxentupdate
+chmod a+x /usr/local/bin/quoxentupdate
 
-if [ ! -f /etc/systemd/system/vulcanoupdate.service ]; then
-cat > /etc/systemd/system/vulcanoupdate.service << EOL
+if [ ! -f /etc/systemd/system/quoxentupdate.service ]; then
+cat > /etc/systemd/system/quoxentupdate.service << EOL
 [Unit]
 Description=Vulcanos's Masternode Autoupdater
 After=network-online.target
@@ -525,12 +525,12 @@ After=network-online.target
 Type=oneshot
 User=root
 WorkingDirectory=${USERHOME}
-ExecStart=/usr/local/bin/vulcanoupdate
+ExecStart=/usr/local/bin/quoxentupdate
 EOL
 fi
 
-if [ ! -f /etc/systemd/system/vulcanoupdate.timer ]; then
-cat > /etc/systemd/system/vulcanoupdate.timer << EOL
+if [ ! -f /etc/systemd/system/quoxentupdate.timer ]; then
+cat > /etc/systemd/system/quoxentupdate.timer << EOL
 [Unit]
 Description=Vulcanos's Masternode Autoupdater Timer
 
@@ -543,8 +543,8 @@ WantedBy=timers.target
 EOL
 fi
 
-systemctl enable vulcanoupdate.timer
-systemctl start vulcanoupdate.timer
+systemctl enable quoxentupdate.timer
+systemctl start quoxentupdate.timer
 
 echo "Waiting for wallet to load..."
 until su -c "vulcano-cli getinfo 2>/dev/null | grep -q \"version\"" $USER; do
