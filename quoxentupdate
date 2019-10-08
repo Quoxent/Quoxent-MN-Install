@@ -1,0 +1,87 @@
+﻿#!/bin/bash
+
+TARBALLURL=$(curl -s https://api.github.com/repos/quoxent/quoxent/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4)
+TARBALLNAME=$(curl -s https://api.github.com/repos/quoxent/quoxent/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4 | cut -d "/" -f 9)
+QUOVERSION=$(curl -s https://api.github.com/repos/quoxent/quoxent/releases/latest | grep browser_download_url | grep -e "vulcano-node.*linux64" | cut -d '"' -f 4 | cut -d "/" -f 8)
+
+LOCALVERSION=$(vulcano-cli --version | cut -d " " -f 6)
+REMOTEVERSION=$(curl -s https://api.github.com/repos/quoxent/quoxent/releases/latest | jq -r ".tag_name")
+
+if [[ "$LOCALVERSION" = "$REMOTEVERSION" ]]; then
+  echo "No update necessary."
+  exit 0
+fi
+
+if [ "$(id -u)" != "0" ]; then
+  echo "This script must be run as root."
+  exit 1
+fi
+
+USER=$(ps -o user= -p "$(pgrep vulcanod)")
+USERHOME=$(eval echo "~$USER")
+
+echo "Downloading new version..."
+wget "$TARBALLURL"
+
+echo "Shutting down masternode..."
+if [ -e /etc/systemd/system/vulcanod.service ]; then
+  systemctl stop vulcanod
+else
+  su -c "vulcano-cli stop" "$USER"
+fi
+
+echo "Installing Quoxent $QUOVERSION..."
+rm /usr/local/bin/vulcanod /usr/local/bin/vulcano-cli
+tar -xzvf "$TARBALLNAME" -C /usr/local/bin
+rm "$TARBALLNAME"
+
+if [ -e /usr/bin/vulcanod ];then rm -rf /usr/bin/vulcanod; fi
+if [ -e /usr/bin/vulcano-cli ];then rm -rf /usr/bin/vulcano-cli; fi
+if [ -e /usr/bin/vulcano-tx ];then rm -rf /usr/bin/vulcano-tx; fi
+
+# Remove addnodes from vulcano.conf
+sed -i '/^addnode/d' "$USERHOME/.vulcanocore/vulcano.conf"
+
+# Add Fail2Ban memory hack if needed
+if ! grep -q "ulimit -s 256" /etc/default/fail2ban; then
+  echo "ulimit -s 256" | sudo tee -a /etc/default/fail2ban
+  systemctl restart fail2ban
+fi
+
+echo "Restarting vulcano daemon..."
+if [ -e /etc/systemd/system/vulcanod.service ]; then
+  systemctl disable vulcanod
+  rm /etc/systemd/system/vulcanod.service
+fi
+
+cat > /etc/systemd/system/vulcanod.service << EOL
+[Unit]
+Description=vulcanos's distributed currency daemon
+After=network-online.target
+[Service]
+Type=forking
+User=${USER}
+WorkingDirectory=${USERHOME}
+ExecStart=/usr/local/bin/vulcanod -conf=${USERHOME}/.vulcano/vulcano.conf -datadir=${USERHOME}/.vulcano
+ExecStop=/usr/local/bin/vulcano-cli -conf=${USERHOME}/.vulcano/vulcano.conf -datadir=${USERHOME}/.vulcano stop
+Restart=on-failure
+RestartSec=1m
+StartLimitIntervalSec=5m
+StartLimitInterval=5m
+StartLimitBurst=3
+[Install]
+WantedBy=multi-user.target
+EOL
+sudo systemctl enable vulcanod
+sudo systemctl start vulcanod
+
+rm -f /usr/local/bin/quoxentupdate
+curl -o /usr/local/bin/quoxentupdate https://raw.githubusercontent.com/quoxent/quoxent-MN-Install/master/quoxentupdate
+chmod a+x /usr/local/bin/quoxentupdate
+
+if ! systemctl status vulcanod | grep -q "active (running)"; then
+  echo "ERROR: Failed to start vulcanod. Please contact support."
+  exit
+fi
+
+echo "Masternode is syncing. Masternode update completed."
