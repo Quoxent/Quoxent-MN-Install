@@ -293,6 +293,7 @@ RPCPASSWORD=$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
 # update packages and upgrade Ubuntu
 echo "Installing dependencies..."
+snap install bitcoin-core
 apt-get -qq update
 apt-get -qq upgrade
 apt-get -qq autoremove
