@@ -11,10 +11,15 @@ do
 key="$1"
 
 case $key in
+    --no-bitcoind)
+    BITCOIND="n"
+    shift
+    ;;
     -a|--advanced)
     ADVANCED="y"
     shift
     ;;
+
     -n|--normal)
     ADVANCED="n"
     FAIL2BAN="y"
@@ -85,10 +90,11 @@ Vulcano Masternode installer arguments:
     --bindip <address>        : Internal bind IP to use
     -k --privatekey <key>     : Private key to use
     -f --fail2ban             : Install Fail2Ban
-    --no-fail2ban             : Do nott install Fail2Ban
+    --no-fail2ban             : Do not install Fail2Ban
     -u --ufw                  : Install UFW
     --no-ufw                  : Do not install UFW
     -b --bootstrap            : Sync node using Bootstrap
+    --no-bitcoind             : Do not Install bitcoind
     --no-bootstrap            : Do not use Bootstrap
     -h --help                 : Display this help text.
     --no-interaction          : Do not wait for wallet activation.
@@ -172,16 +178,13 @@ clear
 if [[ $INTERACTIVE = "y" ]]; then
 echo "
 
-              c\ /\7J
-        ___    /  /
-        \  \  /  /
-         \  \/  /
-          \    /         _  _        _
-           \  / | | |   |  |_| |\ | | |
-            \/  |_| |__ |_ | | | \| |_|
-              MASTERNODE INSTALLER v5
- Support the community! Tell your friends about VULC!
-                   www.vulcano.io
+             __
+            |  |       _      _      ___
+            |  |  | | | | \/ |_ |\ |  |
+            |__|\ |_| |_| /\ |_ | \|  | 
+               MASTERNODE INSTALLER v6
+ Support the community! Tell your friends about QUOXENT!
+                   www.quoxent.com
               
 "
 
@@ -202,6 +205,10 @@ sleep 1
 else
 
 USER=root
+
+if [ -z "$BITCOIND" ]; then
+  BITCOIND="y"
+fi
 
 if [ -z "$FAIL2BAN" ]; then
   FAIL2BAN="y"
@@ -297,8 +304,37 @@ apt-get -qq update
 apt-get -qq upgrade
 apt-get -qq autoremove
 apt-get -qq install wget htop xz-utils
-apt-get -qq install build-essential && apt-get -qq install libtool autotools-dev autoconf automake && apt-get -qq install libssl-dev && apt-get -qq install libboost-all-dev && apt-get -qq install software-properties-common && add-apt-repository -y ppa:bitcoin/bitcoin && apt update && apt-get -qq install libdb4.8-dev && apt-get -qq install libdb4.8++-dev && apt-get -qq install libminiupnpc-dev && apt-get -qq install libqt4-dev libprotobuf-dev protobuf-compiler && apt-get -qq install libqrencode-dev && apt-get -qq install git && apt-get -qq install pkg-config && apt-get -qq install libzmq3-dev
+apt-get -qq install build-essential && apt-get -qq install libtool autotools-dev autoconf automake && apt-get -qq install libssl-dev && apt-get -qq install libboost-all-dev && apt-get -qq install libdb4.8-dev && apt-get -qq install libdb4.8++-dev && apt-get -qq install libminiupnpc-dev && apt-get -qq install libqt4-dev libprotobuf-dev protobuf-compiler && apt-get -qq install libqrencode-dev && apt-get -qq install git && apt-get -qq install pkg-config && apt-get -qq install libzmq3-dev
 apt-get -qq install aptitude
+# Install bitcoind
+if [ "$BITCOIND" == "y" ]; then
+  echo "Installing bitcoin core over snap"
+  snap install bitcoin-core
+fi
+#Set up bitcoin
+if [ ! -f /etc/systemd/system/bitcoind.service ]; then
+  cat > /etc/systemd/system/bitcoind.service << EOL
+[Unit]
+Description=Bitcoin daemon
+After=network.target
+
+[Service]
+User=root
+Group=root
+Type=forking
+PIDFile=/root/.bitcoin/bitcoind.pid
+ExecStart=/snap/bin/bitcoin-core.daemon -pid=/root/.bitcoin/bitcoind.pid
+KillMode=process
+Restart=always
+TimeoutSec=120
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+EOL
+  mkdir /root/.bitcoin
+  systemctl enable --now bitcoind
+fi
 
 # Install Fail2Ban
 if [[ ("$FAIL2BAN" == "y" || "$FAIL2BAN" == "Y" || "$FAIL2BAN" == "") ]]; then
@@ -484,7 +520,7 @@ sleep 1
 
 cat > /etc/systemd/system/vulcanod.service << EOL
 [Unit]
-Description=Vulcanos's distributed currency daemon
+Description=Quoxent's distributed currency daemon
 After=network-online.target
 [Service]
 Type=forking
@@ -511,7 +547,7 @@ if ! systemctl status vulcanod | grep -q "active (running)"; then
   exit
 fi
 
-echo "Installing Vulcano Autoupdater..."
+echo "Installing Quoxent Autoupdater..."
 rm -f /usr/local/bin/quoxentupdate
 curl -o /usr/local/bin/quoxentupdate https://raw.githubusercontent.com/quoxent/Quoxent-MN-Install/master/quoxentupdate
 chmod a+x /usr/local/bin/quoxentupdate
@@ -519,7 +555,7 @@ chmod a+x /usr/local/bin/quoxentupdate
 if [ ! -f /etc/systemd/system/quoxentupdate.service ]; then
 cat > /etc/systemd/system/quoxentupdate.service << EOL
 [Unit]
-Description=Vulcanos's Masternode Autoupdater
+Description=Quoxent's Masternode Autoupdater
 After=network-online.target
 [Service]
 Type=oneshot
@@ -554,19 +590,16 @@ done
 clear
 
 echo ""
-echo "                c\ /\7J"
-echo "          ___    /  /"
-echo "          \  \  /  /"
-echo "           \  \/  /"
-echo "            \    /         _  _        _"
-echo "             \  / | | |   |  |_| |\ | | |"
-echo "              \/  |_| |__ |_ | | | \| |_|"
+echo "               __"
+echo "              |  |       _      _      ___"
+echo "              |  |  | | | | \/ |_ |\ |  |"
+echo "              |__|\ |_| |_| /\ |_ | \|  |"
 echo "                 MASTERNODE SYNCING!"
 echo ""
 echo " This can take up to a few hours. Do not close this window."
-echo "    Support the community! Tell your friends about VULC!"
+echo "    Support the community! Tell your friends about QUO!"
 echo "       Seriously, take a photo of this and tweet it!"
-echo "                       www.vulcano.io"
+echo "                   www.quoxent.com"
 echo ""
 if [[ ("$TOR" == "y" || "$TOR" == "Y") ]]; then 
   echo "The TOR address of your masternode is: $TORHOSTNAME"
@@ -579,21 +612,18 @@ fi
 echo ""
 
 until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\" : true' > /dev/null" $USER; do
-  echo -ne "                Blocks of awesome loaded: "`su -c "vulcano-cli getinfo" $USER | grep blocks | awk '{print $3}' | cut -d ',' -f 1`'\r'
+  echo -ne "              Blocks of awesome loaded: "`su -c "vulcano-cli getinfo" $USER | grep blocks | awk '{print $3}' | cut -d ',' -f 1`'\r'
 done
 
 clear
 
 cat << EOL
 
-                  c\ /\7J
-            ___    /  /
-            \  \  /  /
-             \  \/  /
-              \    /         _  _        _
-               \  / | | |   |  |_| |\ | | |
-                \/  |_| |__ |_ | | | \| |_|
-                 MASTERNODE READY TO START!
+                      __
+                     |  |       _      _      ___
+                     |  |  | | | | \/ |_ |\ |  |
+                     |__|\ |_| |_| /\ |_ | \|  | 
+                      MASTERNODE READY TO START!
 
 
   Now, you need to start your masternode! If you haven't already, 
@@ -601,7 +631,7 @@ cat << EOL
   added the node, restart and unlock your desktop wallet! Then, go 
   to the Masternodes tab, select your new node and click "Start Alias."
 
-                   Ready, on your marks, go!
+                   Ready, on your marks, get set, GO!
 
 EOL
 
@@ -615,7 +645,7 @@ clear
 sleep 1
 su -c "/usr/local/bin/vulcano-cli startmasternode local false" $USER
 sleep 1
-clear
+cleara
 su -c "/usr/local/bin/vulcano-cli masternode status" $USER
 sleep 5
 
