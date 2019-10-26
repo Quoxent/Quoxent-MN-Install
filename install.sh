@@ -165,7 +165,13 @@ systemctl --version >/dev/null 2>&1 || { echo "systemd is required. Are you usin
 
 # Get our current IP
 IPV4=$(dig +short myip.opendns.com @resolver1.opendns.com)
+if [[ $IPV4 == *"connection timed out"* ]]; then
+        IPV4=$(dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com| tr -d \")
+fi
 IPV6=$(dig +short -6 myip.opendns.com aaaa @resolver1.ipv6-sandbox.opendns.com)
+if [[ $IPV6 == *"connection timed out"* ]]; then
+        IPV6=$(dig -6 TXT +short o-o.myaddr.l.google.com @ns1.google.com| tr -d \")
+fi
 if [ -z "$EXTERNALIP" ]; then
   if [ -n "$IPV4" ]; then
     EXTERNALIP="$IPV4"
