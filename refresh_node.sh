@@ -1,17 +1,17 @@
 #!/bin/bash
-
+set -e
 # Make sure curl is installed
 apt-get -qq update
 apt -qqy install curl jq
 clear
 
 BOOTSTRAPURL=$(curl -s https://api.github.com/repos/quoxent/vulcano/releases/latest | grep bootstrap.dat.xz | grep browser_download_url | cut -d '"' -f 4)
-BOOTSTRAPARCHIVE="bootstrap.dat.xz"
-
+BOOTSTRAPARCHIVE="bootstrap-$(echo $BOOTSTRAPURL|cut -d / -f 8).dat.xz"
 clear
 echo "This script will refresh your masternode."
 read -rp "Press Ctrl-C to abort or any other key to continue. " -n1 -s
 clear
+echo ""
 
 if [ "$(id -u)" != "0" ]; then
   echo "This script must be run as root."
@@ -40,7 +40,7 @@ cp "$USERHOME/.vulcanocore/vulcano.conf" "$USERHOME/.vulcanocore/vulcano.conf.ba
 sed -i '/^addnode/d' "$USERHOME/.vulcanocore/vulcano.conf"
 
 echo "Installing bootstrap file..."
-wget "$BOOTSTRAPURL" && xz -cd $BOOTSTRAPARCHIVE > "$USERHOME/.vulcanocore/bootstrap.dat" && rm $BOOTSTRAPARCHIVE
+wget -c "$BOOTSTRAPURL" -O $BOOTSTRAPARCHIVE && xz -cd $BOOTSTRAPARCHIVE > "$USERHOME/.vulcanocore/bootstrap.dat" && rm $BOOTSTRAPARCHIVE
 
 # Install peers.dat - Can be removed after seeder issue is resolved
 wget https://github.com/quoxent/Vulcano/releases/download/2.1.0.0/peers.dat.xz && xz -cd peers.dat.xz > $USERHOME/.vulcanocore/peers.dat && rm peers.dat.xz
@@ -75,19 +75,18 @@ echo ""
 until [ -n "$(vulcano-cli getconnectioncount 2>/dev/null)"  ]; do
   sleep 1
 done
-
-until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced" : true' > /dev/null" "$USER"; do 
+until su -c "vulcano-cli mnsync status 2>/dev/null | grep '\"IsBlockchainSynced\" : true' > /dev/null" "$USER"; do 
   echo -ne "Current block: $(su -c "vulcano-cli getblockcount" "$USER")\\r"
   sleep 1
 done
 
 clear
 
-cat << EOL
+cat << EOF
 Now, you need to start your masternode. If you haven't already, please add this
 node to your masternode.conf now, restart and unlock your desktop wallet, go to
 the Masternodes tab, select your new node and click "Start Alias."
-EOL
+EOF
 
 read -rp "Press Enter to continue after you've done that. " -n1 -s
 
