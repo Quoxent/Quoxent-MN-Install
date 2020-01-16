@@ -139,10 +139,10 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 # Check if we have enough memory
-if [[ $(free -m | awk '/^Mem:/{print $2}') -lt 850 ]]; then
-  echo "This installation requires at least 1GB of RAM.";
-  exit 1
-fi
+#if [[ $(free -m | awk '/^Mem:/{print $2}') -lt 850 ]]; then
+ # echo "This installation requires at least 1GB of RAM.";
+  #exit 1
+#fi
 
 # TODO: Uncomment once we release I2P
 # Check if I2P is an option
